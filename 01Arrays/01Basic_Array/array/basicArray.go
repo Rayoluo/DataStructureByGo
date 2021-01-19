@@ -35,11 +35,12 @@ func (m *MyArray) IsEmpty() bool {
 // 向数组末尾位置添加一个元素
 func (m *MyArray) AddLast(elem int) {
 	// 如果数组满了就抛出异常
-	if m.size == m.GetCapacity() {
-		panic("AddLast fail: full array!")
-	}
-	m.arr[m.size] = elem
-	m.size++
+	// if m.size == m.GetCapacity() {
+	// 	panic("AddLast fail: full array!")
+	// }
+	// m.arr[m.size] = elem
+	// m.size++
+	m.AddIndex(elem, m.size)
 }
 
 // 在数组第index个位置添加一个元素, index 0 ~ size
@@ -55,6 +56,10 @@ func (m *MyArray) AddIndex(elem, index int) {
 	}
 	m.arr[index] = elem
 	m.size++
+}
+
+func (m *MyArray) AddFirst(elem int) {
+	m.AddIndex(elem, 0)
 }
 
 // 将数组以字符串的形式打印

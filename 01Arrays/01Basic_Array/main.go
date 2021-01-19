@@ -19,4 +19,7 @@ func main() {
 	// 在第2个元素位置添加一个元素6
 	arr.AddIndex(6, 2)
 	fmt.Println(arr.ArrayToString())
+	// 在第0个元素位置添加一个元素9
+	arr.AddFirst(9)
+	fmt.Println(arr.ArrayToString())
 }
