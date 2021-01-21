@@ -58,8 +58,70 @@ func (m *MyArray) AddIndex(elem, index int) {
 	m.size++
 }
 
+// 在数组开始位置添加一个元素
 func (m *MyArray) AddFirst(elem int) {
 	m.AddIndex(elem, 0)
+}
+
+// 获取数组指定位置的元素
+func (m *MyArray) Get(index int) int {
+	if index < 0 || index > m.size {
+		panic("Illegal index value!")
+	}
+	return m.arr[index]
+}
+
+// 修改数组指定位置的元素
+func (m *MyArray) Set(index, value int) {
+	if index < 0 || index > m.size {
+		panic("Illegal index value!")
+	}
+	m.arr[index] = value
+}
+
+// 查找数组中是否包含指定的元素
+func (m *MyArray) Contains(e int) bool {
+	for i := 0; i < m.size; i++ {
+		if m.arr[i] == e {
+			return true
+		}
+	}
+	return false
+}
+
+// 查找数组中指定元素的索引，如果不存在元素则返回-1
+func (m *MyArray) Find(e int) int {
+	for i := 0; i < m.size; i++ {
+		if m.arr[i] == e {
+			return i
+		}
+	}
+	return -1
+}
+
+// 删除数组中指定位置的元素, 位置只能是0 - (size-1)之间的元素, 返回删除的元素
+func (m *MyArray) DeleteIndex(index int) (ret int) {
+	if index < 0 || index >= m.size {
+		panic("DeleteIndex Fail: Illegal index value!")
+	}
+	ret = m.arr[index]
+	for i := index + 1; i < m.size; i++ {
+		m.arr[i-1] = m.arr[i]
+	}
+	m.size--
+	return
+}
+
+// 删除数组首个元素
+func (m *MyArray) DeleteFirst() (ret int) {
+	ret = m.DeleteIndex(0)
+	return
+}
+
+// 删除数组末尾元素
+func (m *MyArray) DeleteLast() (ret int) {
+	ret = m.DeleteIndex(m.size - 1)
+	return
 }
 
 // 将数组以字符串的形式打印
