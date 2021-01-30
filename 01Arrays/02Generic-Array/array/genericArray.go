@@ -73,6 +73,7 @@ func (m *MyArray) Set(index int, value interface{}) {
 	if index < 0 || index >= m.size {
 		panic("Illegal index value!")
 	}
+	// add comments
 	m.arr[index] = value
 }
 
