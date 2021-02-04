@@ -57,7 +57,7 @@ func (lq *LoopQueue) Dequeue() (ret interface{}) {
 	lq.arr[lq.front] = nil
 	lq.front = (lq.front + 1) % len(lq.arr)
 	lq.size--
-	if lq.size <= lq.GetCapacity()/4 && lq.GetCapacity()/2 != 0 {
+	if lq.size == lq.GetCapacity()/4 && lq.GetCapacity()/2 != 0 {
 		lq.resize(lq.GetCapacity() / 2)
 	}
 	return
