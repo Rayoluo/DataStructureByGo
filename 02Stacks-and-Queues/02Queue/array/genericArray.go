@@ -116,7 +116,7 @@ func (m *MyArray) DeleteIndex(index int) (ret interface{}) {
 		m.arr[i-1] = m.arr[i]
 	}
 	m.size--
-	if m.size <= m.GetCapacity()/4 && m.GetCapacity()/2 != 0 {
+	if m.size == m.GetCapacity()/4 && m.GetCapacity()/2 != 0 {
 		m.resize(m.GetCapacity() / 2)
 	}
 	return
