@@ -257,3 +257,63 @@ func validateStackSequences(pushed []int, popped []int) bool {
 ```
 
 <img src="https://gitee.com/oluoluo/typoraImage/raw/master/img/image-20210204201346372.png" alt="image-20210204201346372" style="zoom:67%;" />
+
+## 面试题59 队列的最大值
+
+题目链接：https://leetcode-cn.com/problems/dui-lie-de-zui-da-zhi-lcof/
+
+题目描述：定义一个队列并实现函数`max_value`得到队列里的最大值，要求函数`max_value`, `push_back`和`pop_front`的均摊时间复杂度都是`O(1)`；若队列为空，`pop_front`和`max_value`需要返回-1
+
+这道题和前面的包含`min`函数的栈很像，即包含`max`函数的队列。思维历程也是相似的，首先如果使用一个变量记录当前的最大值，如果一个元素入队了就将该元素与记录变量进行比较然后决定是否更新该变量，但是当有一个元素出队了并且该元素刚好是队列的最大元素，那么此时队列中次大的元素我们并不知道。咋整呢？没想出来，看了一下题解，是使用一个双端队列，思路rt，很巧妙:
+
+![示意图](https://pic.leetcode-cn.com/9d038fc9bca6db656f81853d49caccae358a5630589df304fc24d8999777df98-fig3.gif)
+
+```go
+type MaxQueue struct {
+	dataQueue []int // 普通队列
+	deque     []int // 双端队列
+}
+
+func Constructor() MaxQueue {
+	return MaxQueue{
+		dataQueue: make([]int, 0),
+		deque:     make([]int, 0),
+	}
+}
+
+func (this *MaxQueue) Max_value() int {
+	if len(this.deque) == 0 {
+		return -1
+	}
+	return this.deque[0]
+}
+
+func (this *MaxQueue) Push_back(value int) {
+	this.dataQueue = append(this.dataQueue, value)
+	i := len(this.deque) - 1
+	for i >= 0 {
+		if this.deque[i] > value {
+			break
+		}
+		i--
+	}
+	this.deque = append(this.deque[:i+1], value)
+}
+
+func (this *MaxQueue) Pop_front() int {
+	if len(this.dataQueue) == 0 {
+		return -1
+	}
+	ret := this.dataQueue[0]
+	if this.dataQueue[0] == this.deque[0] {
+		this.deque = this.deque[1:]
+	}
+	this.dataQueue = this.dataQueue[1:]
+	return ret
+}
+```
+
+
+
+
+
