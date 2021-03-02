@@ -1,2 +1,2 @@
 # DataStructureByGo
-Implement frequently used data structure with golang.
+Implement frequently used data structure with golang...
