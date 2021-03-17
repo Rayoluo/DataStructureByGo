@@ -12,6 +12,12 @@ func main() {
 		b.Add(v)
 	}
 	b.PreOrder()
+	fmt.Println("==================")
+	b.PreOrderNonRecursion()
+	fmt.Println("==================")
+	fmt.Println("==================")
+	b.LevelOrder()
+	fmt.Println("==================")
 	fmt.Println(b)
 	fmt.Println(b.Search(5))
 	fmt.Println(b.Search(10))

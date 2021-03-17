@@ -88,13 +88,75 @@ func preOrder(n *Node) {
 	preOrder(n.right)
 }
 
-// 二叉搜素树前序遍历的非递归实现
+// 二叉搜素树前序遍历的非递归实现, 基于栈实现
+func (b *BST) PreOrderNonRecursion() {
+	if b.root == nil {
+		fmt.Println("binary search tree's root is nil")
+		return
+	}
+	stack := make([]*Node, 0)
+	stack = append(stack, b.root)
+	for len(stack) != 0 {
+		cur := stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		fmt.Println(cur.e)
+		if cur.right != nil {
+			stack = append(stack, cur.right)
+		}
+		if cur.left != nil {
+			stack = append(stack, cur.left)
+		}
+	}
+}
 
 // 实现二叉搜索树的后序遍历
+func (b *BST) PostOrder() {
+	postOrder(b.root)
+}
+
+func postOrder(n *Node) {
+	if n == nil {
+		return
+	}
+	postOrder(n.left)
+	postOrder(n.right)
+	fmt.Println(n.e)
+}
 
 // 实现二叉搜素树的中序遍历
+func (b *BST) MidOrder() {
+	midOrder(b.root)
+}
 
-// 二叉搜索树的层序遍历实现
+func midOrder(n *Node) {
+	if n == nil {
+		return
+	}
+	midOrder(n.left)
+	fmt.Println(n.e)
+	midOrder(n.right)
+}
+
+// 二叉搜索树的层序遍历实现, 基于队列
+func (b *BST) LevelOrder() {
+	if b.root == nil {
+		fmt.Println("binary search tree's root is nil")
+		return
+	}
+	queue := make([]*Node, 0)
+	queue = append(queue, b.root)
+	for len(queue) != 0 {
+		cur := queue[0]
+		fmt.Println(cur.e)
+		queue = queue[1:]
+		if cur.left != nil {
+			queue = append(queue, cur.left)
+		}
+		if cur.right != nil {
+			queue = append(queue, cur.right)
+		}
+	}
+}
 
 // 移除二叉搜索树的最大最小值
 
