@@ -158,9 +158,74 @@ func (b *BST) LevelOrder() {
 	}
 }
 
-// 移除二叉搜索树的最大最小值
+// 返回二叉搜索树的最小值
+func (b *BST) Minimal() *Node {
+	return minimal(b.root)
+}
+
+func minimal(n *Node) *Node {
+	if n == nil {
+		return nil
+	}
+	if n.left == nil {
+		return n
+	}
+	return minimal(n.left)
+}
+
+// 移除二叉搜索树的最小值, 并返回该最小值
+func (b *BST) RemoveMin() interface{} {
+	// 首先获取元素的最小值
+	min := b.Minimal()
+	b.root = removeMin(b.root)
+	b.size--
+	return min.e
+}
+
+// 移除给定根节点的二叉搜索树的最小值，并返回该二叉搜索树的根节点
+func removeMin(n *Node) *Node {
+	if n == nil {
+		return nil
+	}
+	if n.left == nil {
+		return n.right
+	}
+	n.left = removeMin(n.left)
+	return n
+}
 
 // 移除二叉搜素树中的指定元素
+func (b *BST) Remove(e interface{}) {
+	b.root = remove(b.root, e)
+	b.size--
+}
+
+// 删除二叉搜索树中的指定元素，并返回该二叉搜索树的根节点
+func remove(n *Node, e interface{}) *Node {
+	if n == nil {
+		return nil
+	}
+	if util.Compare(e, n.e) < 0 {
+		n.left = remove(n.left, e)
+		return n
+	} else if util.Compare(e, n.e) > 0 {
+		n.right = remove(n.right, e)
+		return n
+	}
+	// 当前元素即为要被删除的元素，分为两种情况
+	// 1. 只有左子树或者右子树，这时候只需要返回左子树或右子树即可
+	if n.left == nil {
+		return n.right
+	}
+	if n.right == nil {
+		return n.left
+	}
+	// 2. 同时有左子树和右子树, 接下来的第一步是先找到右子树的最小值
+	newNode := minimal(n.right)
+	newNode.right = removeMin(n.right)
+	newNode.left = n.left
+	return newNode
+}
 
 func (b *BST) String() string {
 	var buffer bytes.Buffer
