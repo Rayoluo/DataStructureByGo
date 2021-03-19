@@ -215,10 +215,14 @@ func remove(n *Node, e interface{}) *Node {
 	// 当前元素即为要被删除的元素，分为两种情况
 	// 1. 只有左子树或者右子树，这时候只需要返回左子树或右子树即可
 	if n.left == nil {
-		return n.right
+		rightNode := n.right
+		n.right = nil
+		return rightNode
 	}
 	if n.right == nil {
-		return n.left
+		leftNode := n.left
+		n.left = nil
+		return leftNode
 	}
 	// 2. 同时有左子树和右子树, 接下来的第一步是先找到右子树的最小值
 	newNode := minimal(n.right)
